@@ -2,11 +2,11 @@
 
 This example shows how to implement a **GraphQL server with TypeScript** with the following stack:
 
-- [**Apollo Server**](https://github.com/apollographql/apollo-server): HTTP server for GraphQL APIs   
-- [**GraphQL Nexus**](https://nexusjs.org/docs/): GraphQL schema definition and resolver implementation 
+- [**Apollo Server**](https://github.com/apollographql/apollo-server): HTTP server for GraphQL APIs
+- [**GraphQL Nexus**](https://nexusjs.org/docs/): GraphQL schema definition and resolver implementation
 - [**GraphQL Shield**](https://github.com/maticzav/graphql-shield): Authorization/permission layer for GraphQL schemas
-- [**Prisma Client**](https://www.prisma.io/docs/concepts/components/prisma-client): Databases access (ORM)                  
-- [**Prisma Migrate**](https://www.prisma.io/docs/concepts/components/prisma-migrate): Database migrations               
+- [**Prisma Client**](https://www.prisma.io/docs/concepts/components/prisma-client): Databases access (ORM)
+- [**Prisma Migrate**](https://www.prisma.io/docs/concepts/components/prisma-migrate): Database migrations
 - [**SQLite**](https://www.sqlite.org/index.html): Local, file-based SQL database
 
 ## Contents
@@ -24,7 +24,7 @@ This example shows how to implement a **GraphQL server with TypeScript** with th
 Download this example:
 
 ```
-npx try-prisma --template typescript/graphql-auth
+git clone https://github.com/Andrei-R1/GraphQL-TS-Boilerplate
 ```
 
 Install npm dependencies:
@@ -33,23 +33,6 @@ Install npm dependencies:
 cd graphql-auth
 npm install
 ```
-
-<details><summary><strong>Alternative:</strong> Clone the entire repo</summary>
-
-Clone this repository:
-
-```
-git clone git@github.com:prisma/prisma-examples.git --depth=1
-```
-
-Install npm dependencies:
-
-```
-cd prisma-examples/typescript/graphql-auth
-npm install
-```
-
-</details>
 
 ### 2. Create and seed the database
 
@@ -60,7 +43,6 @@ npx prisma migrate dev --name init
 ```
 
 When `npx prisma migrate dev` is executed against a newly created database, seeding is also triggered. The seed file in [`prisma/seed.ts`](./prisma/seed.ts) will be executed and your database will be populated with the sample data.
-
 
 ### 3. Start the GraphQL server
 
@@ -98,7 +80,6 @@ query {
 
 <details><summary><strong>See more API operations</strong></summary>
 
-
 ### Register a new user
 
 You can send the following mutation in the Playground to sign up a new user and retrieve an authentication token for them:
@@ -125,8 +106,8 @@ mutation {
 
 If you seeded the database with sample data in step 2. of this README, you can use the following `email` and `password` combinations (from [`prisma/seed.ts`](./prisma/seed.ts)) for the `login` mutation as well:
 
-| Email               | Password         |
-| :------------------ | :--------------- |
+| Email                 | Password           |
+| :-------------------- | :----------------- |
 | `alice@prisma.io`   | `myPassword42`   |
 | `nilu@prisma.io`    | `random42`       |
 | `mahmoud@prisma.io` | `iLikeTurtles42` |
@@ -250,7 +231,6 @@ Note that you need to replace the `__POST_ID__` placeholder with an actual `id` 
 }
 ```
 
-
 ### Delete a post
 
 You need to be logged in for this query to work, i.e. an authentication token that was retrieved through a `signup` or `login` mutation needs to be added to the `Authorization` header in the GraphQL Playground. The authentication token must belong to the user who created the post.
@@ -275,7 +255,7 @@ mutation {
 
 ### Retrieve the drafts of a user
 
-You need to be logged in for this query to work, i.e. an authentication token that was retrieved through a `signup` or `login` mutation needs to be added to the `Authorization` header in the GraphQL Playground. 
+You need to be logged in for this query to work, i.e. an authentication token that was retrieved through a `signup` or `login` mutation needs to be added to the `Authorization` header in the GraphQL Playground.
 
 ```graphql
 {
@@ -298,7 +278,6 @@ You need to be logged in for this query to work, i.e. an authentication token th
 ```
 
 </details>
-
 
 ### Authenticating GraphQL requests
 
@@ -328,8 +307,8 @@ As mentioned before, you can set HTTP headers in the bottom-left corner of the G
 
 The following [authorization rules](./src/permissions/index.ts) are defined for the GraphQL API via GraphQL Shield:
 
-| Operation name           | Operation type | Rule                  | Description                                                                              |
-| :----------------------- | :------------- | :-------------------- | :--------------------------------------------------------------------------------------- |
+| Operation name             | Operation type | Rule                    | Description                                                                              |
+| :------------------------- | :------------- | :---------------------- | :--------------------------------------------------------------------------------------- |
 | `me`                     | Query          | `isAuthenticatedUser` | Requires a user to be authenticated                                                      |
 | `draftsByUser`           | Query          | `isAuthenticatedUser` | Requires a user to be authenticated                                                      |
 | `postById`               | Query          | `isAuthenticatedUser` | Requires a user to be authenticated                                                      |
@@ -340,13 +319,12 @@ The following [authorization rules](./src/permissions/index.ts) are defined for 
 
 The `isAuthenticatedUser` rule requires you to send a valid authentication token. The `isPostOwner` rule additionaly requires the user to whom this authentication token belongs to be the author of the post on which the operation is applied.
 
-
 ## Evolving the app
 
 Evolving the application typically requires two steps:
 
 1. Migrate your database using Prisma Migrate
-1. Update your application code
+2. Update your application code
 
 For the following example scenario, assume you want to add a "profile" feature to the app where users can create a profile and write a short bio about themselves.
 
@@ -535,7 +513,7 @@ mutation {
 
 <details><summary>Expand to view more sample Prisma Client queries on <code>Profile</code></summary>
 
-Here are some more sample Prisma Client queries on the new <code>Profile</code> model:
+Here are some more sample Prisma Client queries on the new `<code>`Profile`</code>` model:
 
 ##### Create a new profile for an existing user
 
@@ -585,7 +563,7 @@ const userWithUpdatedProfile = await prisma.user.update({
 
 ## Switch to another database (e.g. PostgreSQL, MySQL, SQL Server, MongoDB)
 
-If you want to try this example with another database than SQLite, you can adjust the the database connection in [`prisma/schema.prisma`](./prisma/schema.prisma) by reconfiguring the `datasource` block. 
+If you want to try this example with another database than SQLite, you can adjust the the database connection in [`prisma/schema.prisma`](./prisma/schema.prisma) by reconfiguring the `datasource` block.
 
 Learn more about the different connection configurations in the [docs](https://www.prisma.io/docs/reference/database-reference/connection-urls).
 
@@ -652,6 +630,7 @@ datasource db {
   url      = "mongodb://USERNAME:PASSWORD@HOST/DATABASE?authSource=admin&retryWrites=true&w=majority"
 }
 ```
+
 Because MongoDB is currently in [Preview](https://www.prisma.io/docs/about/releases#preview), you need to specify the `previewFeatures` on your `generator` block:
 
 ```
@@ -660,6 +639,7 @@ generator client {
   previewFeatures = ["mongodb"]
 }
 ```
+
 </details>
 
 ## Next steps
@@ -668,4 +648,3 @@ generator client {
 - Share your feedback in the [`prisma2`](https://prisma.slack.com/messages/CKQTGR6T0/) channel on the [Prisma Slack](https://slack.prisma.io/)
 - Create issues and ask questions on [GitHub](https://github.com/prisma/prisma/)
 - Watch our biweekly "What's new in Prisma" livestreams on [Youtube](https://www.youtube.com/channel/UCptAHlN1gdwD89tFM3ENb6w)
-
