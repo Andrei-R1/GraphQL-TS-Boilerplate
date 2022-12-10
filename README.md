@@ -7,7 +7,7 @@ This example shows how to implement a **GraphQL server with TypeScript** with th
 - [**GraphQL Shield**](https://github.com/maticzav/graphql-shield): Authorization/permission layer for GraphQL schemas
 - [**Prisma Client**](https://www.prisma.io/docs/concepts/components/prisma-client): Databases access (ORM)
 - [**Prisma Migrate**](https://www.prisma.io/docs/concepts/components/prisma-migrate): Database migrations
-- PostgreSQL: Local, file-based SQL database
+- [**PostgreSQL**](https://www.postgresql.org/): Local, file-based SQL database
 
 ## Contents
 
